@@ -32,6 +32,21 @@ using namespace sha1;
 //Function Prototypes
 int count0(char [],int);
 void prntRes(int [],int);
+string sha1HexString(string s) {
+	char cMsg[100];
+	int size;
+	const int HXSIZE = 41;
+	char hex[HXSIZE];
+	unsigned char code[20];
+
+	//Convert to a character message
+	strcpy_s(cMsg, s.c_str());
+	size = sizeof(cMsg) - 1;
+	//utilize the sha1 function
+	calc(cMsg, size, code);
+	toHexString(code, hex);
+	return hex;
+}
 
 //Execution Begins here
 int main(int argc, char** argv) {
@@ -92,78 +107,41 @@ int main(int argc, char** argv) {
 	string L3 = "\n\
 		And how can man die better\n\
 		Than facing fearful odds,\n\
-		and";
+		and";							//this line doesn't belong in the quote, but it's in my tests so I leave it for now
 	string L4 = "\n\
 		For the ashes of his fathers,\n\
 		And the temples of his Gods.";
 	cout << L1 << L2 << L3 << L4 << endl;
+	string hash00, hash01, hash10, hash11, hash0, hash1, hashTop;
 	//L1
-	//Convert to a character message
-	strcpy_s(cMsg, L1.c_str());
-	size = sizeof(cMsg) - 1;
-	//utilize the sha1 function
-	calc(cMsg, size, code);
-	toHexString(code, hex);
-	string hash00 = hex;
+	hash00 = sha1HexString(L1);
 	cout << "hash00\t" << hash00 << endl;
 	//L2
-	//Convert to a character message
-	strcpy_s(cMsg, L2.c_str());
-	size = sizeof(cMsg) - 1;
-	//utilize the sha1 function
-	calc(cMsg, size, code);
-	toHexString(code, hex);
-	string hash01 = hex;
+	hash01 = sha1HexString(L2);
 	cout << "hash01\t" << hash01 << endl;
 	//L3
-	//Convert to a character message
-	strcpy_s(cMsg, L3.c_str());
-	size = sizeof(cMsg) - 1;
-	//utilize the sha1 function
-	calc(cMsg, size, code);
-	toHexString(code, hex);
-	string hash10 = hex;
+	hash10 = sha1HexString(L3);
 	cout << "hash10\t" << hash10 << endl;
 	//L4
-	//Convert to a character message
-	strcpy_s(cMsg, L4.c_str());
-	size = sizeof(cMsg) - 1;
-	//utilize the sha1 function
-	calc(cMsg, size, code);
-	toHexString(code, hex);
-	string hash11 = hex;
+	hash11 = sha1HexString(L4);
 	cout << "hash11\t" << hash11 << endl;
 	//hash0
-	//Convert to a character message
-	strcpy_s(cMsg, (hash00 + hash01).c_str());
-	size = sizeof(cMsg) - 1;
-	//utilize the sha1 function
-	calc(cMsg, size, code);
-	toHexString(code, hex);
-	string hash0 = hex;
+	hash0 = sha1HexString(hash00 + hash01);
 	cout << "hash0\t" << hash0 << endl;
 	//hash1
-	//Convert to a character message
-	strcpy_s(cMsg, (hash10 + hash11).c_str());
-	size = sizeof(cMsg) - 1;
-	//utilize the sha1 function
-	calc(cMsg, size, code);
-	toHexString(code, hex);
-	string hash1 = hex;
+	hash1 = sha1HexString(hash10 + hash11);
 	cout << "hash1\t" << hash1 << endl;
 	//hashTop
-	//Convert to a character message
-	strcpy_s(cMsg, (hash0 + hash1).c_str());
-	size = sizeof(cMsg) - 1;
-	//utilize the sha1 function
-	calc(cMsg, size, code);
-	toHexString(code, hex);
-	string hashTop = hex;
+	hashTop = sha1HexString(hash0 + hash1);
 	cout << "hashTop\t" << hashTop << endl;
+	cout << endl;
 	cout << "Results are pasted to .cpp file, Change L1, re-run," << endl;
 	cout << "compare results also pasted to.cpp file." << endl;
 	cout << "hash00, hash0, and hashTop changed as expected." << endl;
 	cout << "Run and paste comparisons for changes in L2, L3, and L4 also." << endl;
+	cout << endl;
+	cout << "Please look in the end of main.cpp for the results of all four tests." << endl;
+	cout << endl;
 
 	/**************************************************************/
 	//Exit stage right
